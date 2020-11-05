@@ -6,7 +6,7 @@ namespace Task_499
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("moje zadanie!");
         }
     }
 }
