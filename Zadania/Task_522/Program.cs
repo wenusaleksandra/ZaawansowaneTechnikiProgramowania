@@ -19,73 +19,22 @@ namespace Task_522
                 string value = Console.ReadLine();
                 int grupa1 = Convert.ToInt32(value.Split(" ")[0]);
                 int grupa2 = Convert.ToInt32(value.Split(" ")[1]);
-
-                var rozklad1 = Rozloz(grupa1);
-                var rozklad2 = Rozloz(grupa2);
-
-                var dzielniki1 = rozklad1.Select(x => x.Key).ToList();
-                var dzielniki2 = rozklad2.Select(x => x.Key).ToList();
-                var unique = dzielniki1.Concat(dzielniki2).Distinct().ToList();
-                List<int> dest = new List<int>();
-                foreach(int o in unique)
+                var g1 = grupa1;
+                var g2 = grupa2;
+                while(grupa1 != grupa2)
                 {
-                    var d1Count = dzielniki1.Count(x => x == o);
-                    var d2Count = dzielniki2.Count(x => x == o);
-                    for(var s =0; s< Math.Max(d1Count, d2Count); s++)
+                    if(grupa1 < grupa2)
                     {
-                        dest.Add(o);
+                        grupa1 += g1;
+                    }
+                    else
+                    {
+                        grupa2 += g2;
                     }
                 }
-                var nww = 1;
-                foreach (int j in dest)
-                {
-                    Console.WriteLine(j);
-                    nww = j * nww;
-                }
-                Console.WriteLine($"Potrzeba {nww} cukierków");
+                Console.Clear();
+                Console.WriteLine(grupa1);
             }
-        }
-
-        public static List<int> Get_LiczbyPierwsze(int max)
-        {
-            List<int> liczby = new List<int>();
-            for (var i = 2; i <= max; i++) liczby.Add(i);
-            return liczby.Where(x => JestPierwsza(x)).ToList();
-        }
-
-        public static bool JestPierwsza(int liczba)
-        {
-            int c = liczba;
-            for(var i=2; i<liczba; i++)
-            {
-                if (liczba % i == 0) return false;
-            }
-            return true;
-        }
-
-        public static List<KeyValuePair<int, int>> Rozloz(int liczba)
-        {
-            List<int> pierwsze = Get_LiczbyPierwsze(liczba);
-            List<KeyValuePair<int, int>> output = new List<KeyValuePair<int, int>>();
-
-            do
-            {
-                int warunkowa = output.Count() == 0 ? liczba : output.Last().Value;
-                int dzielnik = MinPierwsza(pierwsze, warunkowa);
-                output.Add(new KeyValuePair<int, int>(dzielnik, warunkowa / dzielnik));
-            } while (output.Last().Value != 1);
-
-            return output;
-
-        }
-
-        public static int MinPierwsza(List<int> pierwsze, int num)
-        {
-            foreach(int p in pierwsze)
-            {
-                if (num % p == 0) return p;
-            }
-            return num;
         }
     }
 }
