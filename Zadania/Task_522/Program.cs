@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Reflection;
 
 namespace Task_522
@@ -22,14 +23,23 @@ namespace Task_522
                 var rozklad1 = Rozloz(grupa1);
                 var rozklad2 = Rozloz(grupa2);
 
-                var dzielniki1 = rozklad1.Select(x => x.Key);
-                var dzielniki2 = rozklad2.Select(x => x.Key);
-
-                var dzielniki = dzielniki1
-
-                var nww = 1;
-                foreach (int j in dzielniki)
+                var dzielniki1 = rozklad1.Select(x => x.Key).ToList();
+                var dzielniki2 = rozklad2.Select(x => x.Key).ToList();
+                var unique = dzielniki1.Concat(dzielniki2).Distinct().ToList();
+                List<int> dest = new List<int>();
+                foreach(int o in unique)
                 {
+                    var d1Count = dzielniki1.Count(x => x == o);
+                    var d2Count = dzielniki2.Count(x => x == o);
+                    for(var s =0; s< Math.Max(d1Count, d2Count); s++)
+                    {
+                        dest.Add(o);
+                    }
+                }
+                var nww = 1;
+                foreach (int j in dest)
+                {
+                    Console.WriteLine(j);
                     nww = j * nww;
                 }
                 Console.WriteLine($"Potrzeba {nww} cukierków");
